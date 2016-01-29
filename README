@@ -1,2 +1,2 @@
 npm install -d
-node app.js
+node server.js

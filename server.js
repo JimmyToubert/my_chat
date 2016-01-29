@@ -70,8 +70,8 @@ io.sockets.on('connection', function (socket) {
 		socket.emit('updatechat', socket.room, 'SERVER', error);
 	});
 
-	socket.on('gif', function(error){
-		giphy.random('superman', function(err, res) {
+	socket.on('gif', function(str){
+		giphy.random(str, function(err, res) {
 			io.to(usernames[socket.username]).in(socket.room).emit('updatechat', socket.room, socket.username, "<img src=\'" + res.data.image_url + "\' width=\"128\" height=\"128\" />");
 		});
 	});
