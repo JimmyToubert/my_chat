@@ -22,6 +22,7 @@ io.sockets.on('connection', function (socket) {
 		} else {
 			socket.username = 'Anonyme';
 		}
+		socket.emit('getUserName', username);
 		usernames[username] = socket.id;
 		switchRoom(default_room, socket.id);
 	});

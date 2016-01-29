@@ -1,5 +1,9 @@
 var socket = io.connect();
-var globid;
+var globid, user;
+
+socket.on('getUserName', function(username) {
+	user = username;
+});
 
 socket.on('connect', function(){
 	if ($('#chat')) {
@@ -22,7 +26,7 @@ socket.on('updatechat', function (room, username, data, color) {
 			color = room;
 		};
 		if (!color) {
-			if (username == socket.username) {
+			if (username == user) {
 				color = "ME";
 			} else {
 				color = "GENERAL";
