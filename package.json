@@ -1,0 +1,10 @@
+{
+  "name": "my_chat",
+  "description": "multiroomchat app",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "",
+    "giphy-api-without-credentials": "^1.1.0",
+    "socket.io": ""
+  }
+}
