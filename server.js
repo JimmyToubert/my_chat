@@ -57,17 +57,31 @@ io.sockets.on('connection', function (socket) {
 			socket.username = username;
 			socket.emit('updatechat', socket.room, 'SERVER', 'You changed your nickname to ' + username);
 		} else {
-			socket.emit('updatechat', socket.room, 'SERVER', 'The name ' + username + ' is already in use');
+			socket.emit('updatechat', socket.room, 'ERROR', 'The name ' + username + ' is already in use');
 		}
 	});
 
-	socket.on('error', function(error){
+	socket.on('errorParse', function(error){
+		var result;
 		if (error) {
-			error = '<span id=\'error\'>[' + error + '] ' + error + ' error occured';	
+			switch (error) {
+				case 'JOIN':
+					result = 'You can\'t join an empty room or SERVER/WHISP ones';
+					break;
+				case 'NICK':
+					result = 'You need to specify a username';
+					break;
+				case 'MSG':
+					result = 'You need to specify a user';
+					break;
+				case 'GIF':
+					result = 'You need to specify a word';
+					break;
+			}
 		} else {
-			error = '<span id=\'error\'>[UNKNOWN] An unknown error occured';	
+			result = 'An unknown error occured';
 		}
-		socket.emit('updatechat', socket.room, 'SERVER', error);
+		socket.emit('updatechat', socket.room, 'ERROR', result);
 	});
 
 	socket.on('gif', function(str){
@@ -109,15 +123,15 @@ io.sockets.on('connection', function (socket) {
 
 	socket.on('help', function(){
 		var help = 'Hello, here is the list of all the command lines:'
-		+'<ul>'
-		+	'<li>/JOIN CHANNEL to join an existing or to create a channel.</li>'
-		+	'<li>/NICKNAME /NICK YOURNICKNAME to change your name if he\'s not already used.</li>'
-		+	'<li>/LIST (PATTERN) to list all channels or to search list which contains PATTERN.</li>'
-		+	'<li>/PART /DISCONNECT /LEAVE (CHANNEL) to disconnect from current channel or CHANNEL.</li>'
-		+	'<li>/USERS (CHANNEL) to list all users in the current channel or in CHANNEL.</li>'
-		+	'<li>/MSG /MESSAGE /PRIVATE /WHISP(ER) USER to send a private message to USER.</li>'
-		+	'<li>/HELP to see the help.</li>'
-		+'</ul>';
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/JOIN CHANNEL to join an existing or to create a channel.</span></p>'
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/NICKNAME /NICK YOURNICKNAME to change your name if he\'s not already used.</span></p>'
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/LIST (PATTERN) to list all channels or to search list which contains PATTERN.</span></p>'
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/PART /DISCONNECT /LEAVE (CHANNEL) to disconnect from current channel or CHANNEL.</span></p>'
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/USERS (CHANNEL) to list all users in the current channel or in CHANNEL.</span></p>'
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/MSG /MESSAGE /PRIVATE /WHISP(ER) USER to send a private message to USER.</span></p>'
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/GIF WORD to get a random Gif from the WORD.</span></p>'
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/CLEAR to clear the chat.</span></p>'
+		+	'<p class=\'list collection-item\'><span class=\'btn text\'>/HELP to see the help.</span></p>'
 		socket.emit('updatechat', socket.room, 'SERVER', help);
 	});
 

@@ -1,22 +1,35 @@
 <!doctype html>
 <html>
 <head>
+	<title>my_chat</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="assets/stylesheets/materialize.min.css" />
 	<link rel="stylesheet" href="assets/stylesheets/style.css" />
-	<title>my_chat</title>
+
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="assets/js/jquery.min.js"></script>
 	<script src="assets/js/materialize.min.js"></script>
 	<script src="assets/js/client.js"></script>
 </head>
 <body>
-	<div id="chat">
-		<ul class="chat"></ul>
-	</div>
-	<div class="input">
-		<input id="data"/>
-		<input type="button" id="datasend"></input>
-	</div>
+	<nav>
+        <div class="nav-wrapper">
+            <p class="brand-logo center">chat</p>
+        </div>
+    </nav>
+	<div class="col s4 fixed glob" style="height: calc(100%);">
+            <div class="col s8">
+            	<div id="chat" class="collection chat row scrollable">
+                </div>
+                <div class="border-bottom"></div>
+            </div>
+            <div class="input-field col s6">
+                <input id="data" type="text" class="validate">
+                <label id="my_label" class="active" for="data">Enter your message here</label>
+                <a href="#" id="datasend" class="waves-effect waves-light"><i class="material-icons right">send</i></a>
+            </div>
+        </div>
 </body>
 </html>
+            

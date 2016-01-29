@@ -53,27 +53,85 @@ table {
 	Starting here
 */
 
-body {
-    padding: 0;
-    margin: 0;
-    font-family: "RobotoDraft", "Helvetica Neue", "Segoe UI Web Regular", "Segoe UI", Helvetica, Arial, sans-serif;
-    color: #333;
-    font-weight: 300;
+.WHISP span {
+    background-color: #880088;
+}
+
+.SERVER span {
+    background-color: #880000;
+}
+
+.GENERAL span {
+	background-color: #333333;
+}
+
+.ME span {
+	background-color: #888888;
+}
+
+.ERROR span {
+	background-color: #000088;
+}
+
+.btn {
+	padding: 0px;
+	border-radius: 0px;
+}
+
+.list .text {
+	background-color: white;
+	width: 60%;
+	text-align: left;
+	padding-left: 5%;
+	color: grey;
+}
+
+.collection .collection-item {
+	padding: 0px;
+}
+
+.room, .username {
+	width: 20%;
+}
+
+ul {
+	list-style: none;
 }
 
 #data {
-	margin-right: 10px; 
-	margin-left: 10px; 
 	width: 80%;
-	height: 10%;
+	margin-left: 5%;
 }
 
-button {
-    background: #ce1126;
-    bottom: 9px;
+#datasend i {
+	height: 100%;
+	margin-right: 5%;
+	margin-left: 0;
+	margin-top: 5%;
+	color: #ee6e73;
 }
 
-#chat {
-	width: 100%;
-	height: 90%;
+#data:focus, #data:hover {
+	border-bottom: 1px solid #ee6e73;
+	box-shadow: 0 1px 0 0 #ee6e73;
+	/*color: #ee6e73;*/
+}
+
+input[type=text]:focus:not([readonly])+label {
+	color: #ee6e73;
+}
+
+.input-field {
+    position: fixed;
+    margin-top: 1rem;
+    bottom: 0;
+    width: 100%;
+}
+
+.collection {
+	margin-bottom: 10%;
+}
+
+nav .brand-logo.center {
+	line-height: 55px;
 }

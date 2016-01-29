@@ -6,14 +6,33 @@ socket.on('connect', function(){
 		$('#chat').empty();
 	}
 	socket.emit('adduser', prompt("Quel est ton pseudo?"));
+	$('.brand-logo').text('general');
+	$('#data').focus();
 });
 
-socket.on('updatechat', function (room, username, data) {
+socket.on('updatechat', function (room, username, data, color) {
 	if (data != '' && data != null) {
+		switch (username) {
+			case "SERVER":
+			case "ERROR":
+				color = username;
+				break;
+		}
+		if (room == "WHISP") {
+			color = room;
+		};
+		if (!color) {
+			if (username == socket.username) {
+				color = "ME";
+			} else {
+				color = "GENERAL";
+			}
+		}
 		$('#chat').append(
-			'<li><span class=\'room\'>' + room + '</span>'
-			+ '<span class=\'username\'>'+ username + ':</span>'
-			+ data + '</li>');
+			'<p class=\'list collection-item ' + color + '\'><span class=\'room btn\'>' + room.substr(0, 4) + '</span>'
+			+ '<span class=\'btn username\'>' + username + '</span>'
+			+ '<span class=\'btn text\'>' + data + '</span></p>');
+		$(window).scrollTop(9999);
 	}
 });
 
@@ -33,8 +52,9 @@ $(function(){
 					if (list[1] && list[1].toUpperCase() != "WHISP" && list[1].toUpperCase() != "SERVER") {
 						globid = '\/#' + socket.id;
 						switchRoom(list[1], globid);
+						$('.brand-logo').text(list[1]);
 					} else {
-						socket.emit('error', 'JOIN');
+						socket.emit('errorParse', list[0]);
 					}
 				break;
 				case 'NICKNAME':
@@ -42,7 +62,7 @@ $(function(){
 					if (list[1]) {
 						socket.emit('nickname', list[1]);
 					} else {
-						socket.error('error', 'NICK');
+						socket.emit('errorParse', list[0]);
 					}
 				break;
 				case 'LIST':
@@ -79,19 +99,27 @@ $(function(){
 						var message = list.join(' ');
 						socket.emit('whisper', target, message);
 					} else {
-						socket.error('error', 'MSG');
+						socket.emit('errorParse', list[0]);
 					}
 				break;
 				case 'HELP':
 					socket.emit('help');
 				break;
 				case 'GIF':
-					socket.emit('gif', list[1]);
+					if (list[1]) {
+						socket.emit('gif', list[1]);
+					} else {
+						socket.emit('errorParse', list[0]);
+					}
+				break;
+				case 'CLEAR':
+					$('#chat').empty();
 				break;
 			}
 		} else {
 			socket.emit('sendchat', backup);
 		}
+		$('#data').focus();
 	});
 
 	$('#data').keypress(function(e) {
